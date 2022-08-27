@@ -40,6 +40,30 @@
             </div>
           </div>
         </div>
+        <form action="{% url 'book.review' book.id %}" class="" method="POST">
+          {% csrf_token %}
+          <textarea
+            name="review"
+            class="border rounded p-2 w-full"
+            id=""
+            cols="30"
+            rows="10"
+            placeholder="Write your review here"
+          ></textarea>
+
+          <button
+            type="submit"
+            class="float-right border rounded p-2 bg-gray-800 text-white"
+          >
+            Submit
+          </button>
+        </form>
+
+        <div class="mt-10">
+          {% for review in reviews %}
+          <p>{{review.body}}</p>
+          {% endfor %}
+        </div>
       </div>
     </section>
   </body>
