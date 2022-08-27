@@ -1,15 +1,21 @@
 from django.shortcuts import render,get_object_or_404, redirect
 from myApp.models import Book,Review
+from django.views.generic import ListView
 import json
 
 
-booksData = open('C:/Users/medre/OneDrive/Bureau/python/djangoProject/books.json').read()
-data = json.loads(booksData)
+# booksData = open('C:/Users/medre/OneDrive/Bureau/python/djangoProject/books.json').read()
+# data = json.loads(booksData)
 
-def index(request):
-    dbData= Book.objects.all()
-    context = {'books':dbData}
-    return render(request,'myApp/index.html',context)
+
+class BookListView(ListView):
+    def get_queryset(self):
+        return Book.objects.all()
+
+# def index(request):
+#     dbData= Book.objects.all()
+#     context = {'books':dbData}
+#     return render(request,'myApp/index.html',context)
 
 
 def show(request,id):
