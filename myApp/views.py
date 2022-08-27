@@ -1,5 +1,5 @@
-from django.shortcuts import render,get_object_or_404
-from myApp.models import Book
+from django.shortcuts import render,get_object_or_404, redirect
+from myApp.models import Book,Review
 import json
 
 
@@ -18,11 +18,15 @@ def show(request,id):
     # singleBook = Book.objects.filter(id=id).first()
    
     singleBook = get_object_or_404(Book,pk=id)
-
-    context = {'book':singleBook}
+    reviews = Review.objects.filter(book_id=id).order_by('-created_at')
+    context = {'book':singleBook, 'reviews' : reviews}
     return render(request,'myApp/show.html',context)    
 
-
+def review(request,id):
+      review = request.POST['review']
+      newReview = Review(body=review,book_id=id)  
+      newReview.save()
+      return redirect("/myApp")
 # def show(request,id):
 #     singleBook = list()
 #     for book in data:
