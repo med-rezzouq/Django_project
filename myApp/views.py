@@ -1,6 +1,6 @@
 from django.shortcuts import render,get_object_or_404, redirect
 from myApp.models import Book,Review
-from django.views.generic import ListView
+from django.views.generic import ListView,DetailView
 import json
 
 
@@ -18,15 +18,18 @@ class BookListView(ListView):
 #     return render(request,'myApp/index.html',context)
 
 
-def show(request,id):
 
-    #we did first because the result of filter is another array so we need to select 0 index
-    # singleBook = Book.objects.filter(id=id).first()
+class BookDetailView(DetailView):
+    model = Book
+# def show(request,id):
+
+#     #we did first because the result of filter is another array so we need to select 0 index
+#     # singleBook = Book.objects.filter(id=id).first()
    
-    singleBook = get_object_or_404(Book,pk=id)
-    reviews = Review.objects.filter(book_id=id).order_by('-created_at')
-    context = {'book':singleBook, 'reviews' : reviews}
-    return render(request,'myApp/show.html',context)    
+#     singleBook = get_object_or_404(Book,pk=id)
+#     reviews = Review.objects.filter(book_id=id).order_by('-created_at')
+#     context = {'book':singleBook, 'reviews' : reviews}
+#     return render(request,'myApp/show.html',context)    
 
 def review(request,id):
       review = request.POST['review']
