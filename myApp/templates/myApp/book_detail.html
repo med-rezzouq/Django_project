@@ -1,70 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>{{book.title}}</title>
-  </head>
-  <body>
-    <section class="py-10 flex justify-center">
-      <div class="w-10/12">
-        <h1 class="text-center text-4xl">{{book.title}}</h1>
-        <div class="flex justify-between mt-10">
-          <div class="flex justify-between">
-            <div class="w-3/12">
-              <img src="{{book.thumbnailUrl}}" alt="" width="200" class="src" />
-            </div>
-            <div class="w-9/12">
-              <div class="mt-10">
-                <p class="text-3xl">short Description</p>
-                <p>{{book.shortDescription}}</p>
-              </div>
-
-              <div class="mt-10">
-                <p class="text-3xl">Number of Pages</p>
-                <p>Total {{book.pageCount}} pages</p>
-              </div>
-
-              <div class="mt-10">
-                <p class="text-3xl">Author</p>
-                <p>{{book.authors|join:", "}}</p>
-              </div>
-
-              <div class="mt-10">
-                <p class="text-3xl">Long Description</p>
-                <p>{{book.longDescription}}</p>
-              </div>
-              <p>description</p>
-            </div>
-          </div>
+{% extends 'myApp/base.html' %} # {% block title %} book store - {{book.title}}
+<!-- nothing here -->
+{%endblock %} {% block content %}
+<div class="w-10/12">
+  <h1 class="text-center text-4xl">{{book.title}}</h1>
+  <div class="flex justify-between mt-10">
+    <div class="flex justify-between">
+      <div class="w-3/12">
+        <img src="{{book.thumbnailUrl}}" alt="" width="200" class="src" />
+      </div>
+      <div class="w-9/12">
+        <div class="mt-10">
+          <p class="text-3xl">short Description</p>
+          <p>{{book.shortDescription}}</p>
         </div>
-        <form action="{% url 'book.review' book.id %}" class="" method="POST">
-          {% csrf_token %}
-          <textarea
-            name="review"
-            class="border rounded p-2 w-full"
-            id=""
-            cols="30"
-            rows="10"
-            placeholder="Write your review here"
-          ></textarea>
-
-          <button
-            type="submit"
-            class="float-right border rounded p-2 bg-gray-800 text-white"
-          >
-            Submit
-          </button>
-        </form>
 
         <div class="mt-10">
-          {% for review in reviews %}
-          <p>{{review.body}}</p>
-          {% endfor %}
+          <p class="text-3xl">Number of Pages</p>
+          <p>Total {{book.pageCount}} pages</p>
         </div>
+
+        <div class="mt-10">
+          <p class="text-3xl">Author</p>
+          <p>{{book.authors|join:", "}}</p>
+        </div>
+
+        <div class="mt-10">
+          <p class="text-3xl">Long Description</p>
+          <p>{{book.longDescription}}</p>
+        </div>
+        <p>description</p>
       </div>
-    </section>
-  </body>
-</html>
+    </div>
+  </div>
+  <form action="{% url 'book.review' book.id %}" class="" method="POST">
+    {% csrf_token %}
+    <textarea
+      name="review"
+      class="border rounded p-2 w-full"
+      id=""
+      cols="30"
+      rows="10"
+      placeholder="Write your review here"
+    ></textarea>
+
+    <button
+      type="submit"
+      class="float-right border rounded p-2 bg-gray-800 text-white"
+    >
+      Submit
+    </button>
+  </form>
+
+  <div class="mt-10">
+    {% for review in reviews %}
+    <p>{{review.body}}</p>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
