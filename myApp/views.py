@@ -24,7 +24,10 @@ class BookDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['reviews'] = context['book'].review_set.order_by('-created_at')
+        context['authors'] = context['book'].authors.all()
         return context    
+
+
 # def show(request,id):
 
 #     #we did first because the result of filter is another array so we need to select 0 index
@@ -34,6 +37,12 @@ class BookDetailView(DetailView):
 #     reviews = Review.objects.filter(book_id=id).order_by('-created_at')
 #     context = {'book':singleBook, 'reviews' : reviews}
 #     return render(request,'myApp/show.html',context)    
+
+def author(request,author):
+    books=Book.objects.filter(authors__name=author)
+    context = {'book_list':books}
+    return render(request,'myApp/book_list.html',context)
+
 
 def review(request,id):
       review = request.POST['review']

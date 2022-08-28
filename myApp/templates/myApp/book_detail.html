@@ -21,7 +21,13 @@
 
         <div class="mt-10">
           <p class="text-3xl">Author</p>
-          <p>{{book.authors|join:", "}}</p>
+          <p>
+            {% for author in authors %}
+
+            <a href="{% url 'author.books' author %}">{{author}}</a>,
+            <!--  -->
+            {% endfor%}
+          </p>
         </div>
 
         <div class="mt-10">
